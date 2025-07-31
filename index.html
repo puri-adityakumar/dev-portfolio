@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aditya's Portfolio</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+
+        a {
+            color: white;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        #initial-content {
+            text-align: center;
+        }
+
+        #game-container {
+            display: none;
+            margin-top: 2em;
+        }
+
+        .choice-btn {
+            background-color: black;
+            color: white;
+            border: 1px solid white;
+            font-family: 'Courier New', Courier, monospace;
+            padding: 10px 20px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .choice-btn:hover {
+            background-color: white;
+            color: black;
+        }
+
+        #result-container {
+            margin-top: 1.5em;
+            font-size: 1.1em;
+        }
+
+        #result-message {
+            margin-top: 1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="initial-content">
+        <p>hi, this is aditya, here's my <a href="https://github.com/puri-adityakumar" target="_blank"
+                rel="noopener noreferrer">github</a></p>
+        <p><a id="play-link">wanna play a game?</a></p>
+    </div>
+
+    <div id="game-container">
+        <div>
+            <button class="choice-btn" data-choice="rock">Rock</button>
+            <button class="choice-btn" data-choice="paper">Paper</button>
+            <button class="choice-btn" data-choice="scissors">Scissors</button>
+        </div>
+        <div id="result-container">
+            <p>Your choice: <span id="user-choice"></span></p>
+            <p>Computer's choice: <span id="computer-choice"></span></p>
+            <p id="result-message"></p>
+        </div>
+    </div>
+
+    <script>
+        const playLink = document.getElementById('play-link');
+        const initialContent = document.getElementById('initial-content');
+        const gameContainer = document.getElementById('game-container');
+        const choiceButtons = document.querySelectorAll('.choice-btn');
+        const userChoiceSpan = document.getElementById('user-choice');
+        const computerChoiceSpan = document.getElementById('computer-choice');
+        const resultMessage = document.getElementById('result-message');
+
+        playLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            initialContent.style.display = 'none';
+            gameContainer.style.display = 'block';
+        });
+
+        const choices = ['rock', 'paper', 'scissors'];
+
+        choiceButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const userChoice = button.dataset.choice;
+                const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+                userChoiceSpan.textContent = userChoice;
+                computerChoiceSpan.textContent = computerChoice;
+
+                const result = getResult(userChoice, computerChoice);
+                resultMessage.textContent = result;
+            });
+        });
+
+        function getResult(user, computer) {
+            if (user === computer) {
+                return "It's a draw!";
+            }
+            if (
+                (user === 'rock' && computer === 'scissors') ||
+                (user === 'paper' && computer === 'rock') ||
+                (user === 'scissors' && computer === 'paper')
+            ) {
+                return 'You win!';
+            }
+            return 'You lose!';
+        }
+    </script>
+</body>
+
+</html>
